@@ -1,32 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void printMatrices(int** mat, int size)
+void printMatrices(int **mat, int size)
 {
-    for(int i = 0; i < size; i++) {
-    for(int j = 0; j < size; j++) {
+    for(int i = 0; i < size; ++i) {
+    for(int j = 0; j < size; ++j) {
         printf("%d ", mat[i][j]);
     }
     printf("\n");
     }
 }
 
-int** allocateMatrix(int size)
+int **allocateMatrix(int size)
 {
-    int** mat = (int**)malloc(sizeof(int*) * size);
-    for(int i = 0; i < size; i++)
+    int **mat = (int**)malloc(sizeof(int*) * size);
+    for(int i = 0; i < size; ++i)
         mat[i] = (int*)malloc(sizeof(int) * size);
     return mat;
 }
 
-void delocateMatrix(int** mat, int size)
+void delocateMatrix(int **mat, int size)
 {
-    for(int i = 0; i < size; i++)
+    for(int i = 0; i < size; ++i)
         free(mat[i]);
     free(mat);
 }
 
-void multiplyMatrices(int** A, int** B, int** C, int size)
+void multiplyMatrices(int **A, int **B, int **C, int size)
 {
     // Base case
     if(size == 1)
@@ -36,22 +36,22 @@ void multiplyMatrices(int** A, int** B, int** C, int size)
     }
     // Divide
     int newSize = size/2;
-    int** A11 = allocateMatrix(newSize);
-    int** A12 = allocateMatrix(newSize);
-    int** A21 = allocateMatrix(newSize);
-    int** A22 = allocateMatrix(newSize);
-    int** B11 = allocateMatrix(newSize);
-    int** B12 = allocateMatrix(newSize);
-    int** B21 = allocateMatrix(newSize);
-    int** B22 = allocateMatrix(newSize);
-    int** C11 = allocateMatrix(newSize);
-    int** C12 = allocateMatrix(newSize);
-    int** C21 = allocateMatrix(newSize);
-    int** C22 = allocateMatrix(newSize);
+    int **A11 = allocateMatrix(newSize);
+    int **A12 = allocateMatrix(newSize);
+    int **A21 = allocateMatrix(newSize);
+    int **A22 = allocateMatrix(newSize);
+    int **B11 = allocateMatrix(newSize);
+    int **B12 = allocateMatrix(newSize);
+    int **B21 = allocateMatrix(newSize);
+    int **B22 = allocateMatrix(newSize);
+    int **C11 = allocateMatrix(newSize);
+    int **C12 = allocateMatrix(newSize);
+    int **C21 = allocateMatrix(newSize);
+    int **C22 = allocateMatrix(newSize);
 
-    for (int i = 0; i < newSize; i++)
+    for (int i = 0; i < newSize; ++i)
     {
-        for (int j = 0; j < newSize; j++)
+        for (int j = 0; j < newSize; ++j)
         {
             A11[i][j] = A[i][j];
             A12[i][j] = A[i][j + newSize];
@@ -80,8 +80,8 @@ void multiplyMatrices(int** A, int** B, int** C, int size)
     multiplyMatrices(A22, B22, C22, newSize);
 
     // Combine
-    for(int i = 0; i < newSize; i++)
-        for(int j = 0; j < newSize; j++)
+    for(int i = 0; i < newSize; ++i)
+        for(int j = 0; j < newSize; ++j)
         {
             C[i][j] = C[i][j] + C11[i][j];
             C[i][j+newSize] = C[i][j+newSize] + C12[i][j];
@@ -107,19 +107,19 @@ void multiplyMatrices(int** A, int** B, int** C, int size)
 int main() {
     const int size = 4;
 
-    int** A = allocateMatrix(size);
+    int **A = allocateMatrix(size);
     A[0][0] = 2; A[0][1] = 5; A[0][2] = 3; A[0][3] = 6;
     A[1][0] = 1; A[1][1] = 7; A[1][2] = 4; A[1][3] = 7;
     A[2][0] = 6; A[2][1] = 9; A[2][2] = 8; A[2][3] = 2;
     A[3][0] = 3; A[3][1] = 5; A[3][2] = 7; A[3][3] = 1;
 
-    int** B = allocateMatrix(size);
+    int **B = allocateMatrix(size);
     B[0][0] = 4; B[0][1] = 8; B[0][2] = 2; B[0][3] = 8;
     B[1][0] = 6; B[1][1] = 3; B[1][2] = 1; B[1][3] = 9;
     B[2][0] = 5; B[2][1] = 4; B[2][2] = 7; B[2][3] = 1;
     B[3][0] = 4; B[3][1] = 2; B[3][2] = 6; B[3][3] = 2;
 
-    int** res = allocateMatrix(size);
+    int **res = allocateMatrix(size);
     multiplyMatrices(A, B, res, size);
 
     printf("A: \n");
