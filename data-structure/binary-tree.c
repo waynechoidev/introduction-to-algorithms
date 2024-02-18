@@ -3,57 +3,66 @@
 
 // it creates a complete binary tree
 
-typedef struct Node {
+typedef struct Node
+{
     int data;
-    struct Node* left;
-    struct Node* right;
+    struct Node *left;
+    struct Node *right;
 } Node;
 
-Node* createNode(int data) {
-    Node *newNode = (Node*)malloc(sizeof(Node));
+Node *createNode(int data)
+{
+    Node *newNode = (Node *)malloc(sizeof(Node));
     newNode->data = data;
     newNode->left = newNode->right = NULL;
     return newNode;
 }
 
-void insert(Node** root, int data) {
-    if(*root == NULL)
+void insert(Node **root, int data)
+{
+    if (*root == NULL)
         *root = createNode(data);
-    else if((*root)->left == NULL)
+    else if ((*root)->left == NULL)
         (*root)->left = createNode(data);
-    else if((*root)->right == NULL)
+    else if ((*root)->right == NULL)
         (*root)->right = createNode(data);
     else
         insert(&((*root)->left), data);
-
 }
 
-void preorderTraversal(Node* root) {
-    if (root != NULL) {
+void preorderTraversal(Node *root)
+{
+    if (root != NULL)
+    {
         printf("%d ", root->data);
         preorderTraversal(root->left);
         preorderTraversal(root->right);
     }
 }
 
-void inorderTraversal(Node* root) {
-    if (root != NULL) {
+void inorderTraversal(Node *root)
+{
+    if (root != NULL)
+    {
         inorderTraversal(root->left);
         printf("%d ", root->data);
         inorderTraversal(root->right);
     }
 }
 
-void postorderTraversal(Node* root) {
-    if (root != NULL) {
+void postorderTraversal(Node *root)
+{
+    if (root != NULL)
+    {
         postorderTraversal(root->left);
         postorderTraversal(root->right);
         printf("%d ", root->data);
     }
 }
 
-int main() {
-    Node* root = NULL;
+int main()
+{
+    Node *root = NULL;
     insert(&root, 1);
     insert(&root, 2);
     insert(&root, 3);
