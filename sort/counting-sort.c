@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX 5
-
 void printArray(int *arr, int size)
 {
     for (int i = 0; i < size; i++)
@@ -13,13 +11,20 @@ void printArray(int *arr, int size)
 
 int *countingSort(int *arr, int size)
 {
-    int count[MAX + 1] = {0};
+    int max = 0;
+    for (int i = 0; i < size; i++)
+        if (arr[i] > max)
+            max = arr[i];
+
+    int *count = (int *)malloc(sizeof(int) * (max + 1));
+    memset(count, 0, sizeof(int) * (max + 1));
     int *res = (int *)malloc(sizeof(int) * size);
+    memset(res, 0, sizeof(int) * size);
 
     for (int i = 0; i < size; i++)
         count[arr[i]]++;
 
-    for (int i = 1; i <= MAX; i++)
+    for (int i = 1; i <= max; i++)
         count[i] = count[i] + count[i - 1];
 
     for (int i = size - 1; i >= 0; i--)
@@ -27,6 +32,7 @@ int *countingSort(int *arr, int size)
         res[count[arr[i]]-- - 1] = arr[i];
     }
 
+    free(count);
     return res;
 }
 
